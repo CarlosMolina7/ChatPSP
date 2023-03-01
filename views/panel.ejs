@@ -1,0 +1,61 @@
+<%- include('cabecera', {titulo: 'Panel de Control'}) -%>
+<div class="section">
+  <div class="container">
+    <br><br>
+    <h1 class="header center-align">Panel de Control</h1>
+  </div>
+</div>
+<div class="section">
+    <div class="container">
+      <br><br>
+      <div class="row">
+        <div style='display: <%= otro %> '>
+        <div class="row">
+            <form class="col s12" method='post' action='admin'>
+            
+          <div class="row">
+            <div class="col s5 " ></div>
+            <div class="col s5 " ></div>
+            <div class="col s2 " >
+                <input type="submit" value='Admin' class="waves-effect waves-light purple lighten-1 btn"> 
+            </div>
+            
+          </div>
+          
+        </form>
+        </div>
+        </div>
+      <form class="col s12" method='post' action='cambiar'>
+        <div class="row">
+          <div class="col s12 " >
+            <h2 class="">Cambiar Contraseña</h2>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="pass1" name='pass1' type="text" class="validate">
+            <label for="pass1">Contraseña</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" name='password' type="password" class="validate">
+            <label for="password">Repetir Contraseña</label>
+          </div>
+        </div>
+        <div class="row">
+            <div class=' col s10'></div>
+            <div class=" col s2">
+              <input type="submit" value='Enviar' class="waves-effect waves-light purple lighten-1 btn">
+            </div>
+          </div>
+        </form>
+      
+    </div>
+  </div>
+</div>  
+
+ 
+  
+<%- include('pie') -%>

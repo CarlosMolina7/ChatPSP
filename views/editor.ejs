@@ -1,0 +1,55 @@
+<%- include('cabecera', {titulo: 'Editar'}) -%>
+<div class="section">
+  <div class="container">
+    <br><br>
+    <h1 class="header center-align">Editor</h1>
+  </div>
+</div>
+<div class="section">
+    <div class="container">
+      <br><br>
+      <div class="row">
+      <form class="col s12" method='post' action='mandar'>
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="titulo" name='titulo' type="text" class="validate" value="<%= titulo %>">
+            <label for="titulo"><%= titulo %></label>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea  name='texto' type="text" value="<%= texto %>"class="validate"><%= texto %></textarea>
+          </div>
+        </div>
+        
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="fecha" name='fecha' type="date" value="<%= new Date(fecha) %>">
+              <label for="fecha"><%= new Date(fecha).getDate() + "-" + (parseInt(new Date(fecha).getMonth())+1) + "-" + new Date(fecha).getFullYear() %></label>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class='input-field col s10'></div>
+          <div class="input-field col s2">
+            <input type="hidden" name="id" value="<%= id %>"> 
+            <input type="submit" value='Enviar' class="waves-effect waves-light purple lighten-1 btn">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, {
+      // specify options here
+    });
+  });
+</script>
+ 
+  
+<%- include('pie') -%>

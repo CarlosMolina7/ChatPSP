@@ -1,0 +1,110 @@
+<%- include('cabecera', {titulo: 'Chat' }) -%>
+    <div class="container">
+        <h2 class="header col s12 center-align">Chat MoliMaker</h2>
+        <div class="section" id="mensajes">
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            
+            <div class="row">
+                
+    
+                <div class="input-field col s12">
+                    <input id="usu" name='usu' value="<%= usuario %>" type="hidden" class="validate">
+                    
+                </div>
+                <div class="input-field col s12">
+                    <input id="usuario" name='usuario' value="<%= usuario %>" type="text" readonly class="validate">
+                    <label for="usuario">Usuario</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="mensaje" name='mensaje' type="text" class="validate">
+                    <label for="mensaje">Mensaje</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class='input-field col s10'></div>
+                <div class="input-field col s2">
+                    <button onclick='enviar()' class="waves-effect waves-light purple lighten-1 btn">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <%- include('pie') -%>
+        <script>
+
+            let socket = new WebSocket("ws://localhost:8080/chat");
+            function enviar() {
+                const usuario = document.getElementById('usuario').value
+                const mensaje = document.getElementById('mensaje').value
+                const usu = document.getElementById('usu').value
+                console.log(mensaje)
+                console.log(usuario)
+                console.log( usu )
+                const msg = { usuario: usuario, mensaje: mensaje,usu:usu }
+                socket.send(JSON.stringify(msg))
+            }
+
+
+
+
+            socket.onopen = function (e) {
+                // En este caso no se hace nada
+                /* cuantos++
+                 socket.send({"cuantos":cuantos})*/
+                //document.getElementById("total").innerHTML += 0;
+            };
+            socket.onmessage = function (event) {
+                const mensajes = JSON.parse(event.data)
+                let html = ''
+                for (let n = 0; n < mensajes.length; n++) {
+                    const mensaje = mensajes[n]
+                    if (mensaje.usu == document.getElementById('usuario').value)
+                        html += "<div class='row'> <div class='col s8 offset-s4'> <p class='card-panel blue lighten-4'>" + mensaje.mensaje
+                            + "</p></div></div>";
+                    else
+                        html += "<div class='row'> <div class='col s8'><p class='card-panel pink lighten-4'> <b>" + mensaje.usuario + "</b>: " + mensaje.mensaje
+                            + "</p></div></div>";
+
+                }
+                document.getElementById('mensajes').innerHTML = html;
+            }
+
+            /*  console.log(event.data)
+              if (event.data > 0)
+                  turnoCarnicero = event.data
+              document.getElementById("actual").innerHTML = turnoCarnicero
+              /* const mensajes = JSON.parse(event.data)
+               let html = ''
+               for (let n = 0; n < mensajes.length; n++) {
+                   const mensaje = mensajes[n]
+                   html += "<p><b>" + mensaje.usuario + "</b>: " + mensaje.mensaje
+                       + "</p>";
+               }*/
+            //document.getElementById('mensajes').innerHTML = event.data;
+
+
+
+            socket.onclose = function (event) {
+                if (event.wasClean) {
+                    alert(`[onclose] Conexión cerrada limpiamente, code=$
+{event.code} reason=${event.reason}`);
+                } else {
+                    // Servidor apagado o sin red
+                    alert('[onclose] La conexión se ha perdido');
+                }
+            };
+            socket.onerror = function (error) {
+                alert(`[onerror] ${error.message}`);
+            };
+
+        </script>
